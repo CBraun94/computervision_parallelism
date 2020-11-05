@@ -27,6 +27,16 @@ void CBThreadPool::push_task ( CBTask* t )
     resume();
 }
 
+void CBThreadPool::push_tasks(std::vector<CBTask*> v)
+{
+    _sem_task.Enter();
+    _tasks.insert(_tasks.end(), v.begin(), v.end());
+    v.clear();
+    _sem_task.Leave();
+    
+    resume();
+}
+
 void CBThreadPool::employ()
 {
     std::cout<<"CBThreadPool about to employ " << std::endl << std::flush;

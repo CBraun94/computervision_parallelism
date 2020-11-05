@@ -14,6 +14,7 @@ public:
     ~CBThreadPool();
     
     void push_task(CBTask* t);
+    void push_tasks(std::vector<CBTask*> v);
 private:
     size_t _capacity;
     

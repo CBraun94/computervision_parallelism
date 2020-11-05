@@ -5,13 +5,14 @@
 
 #include <functional> /* std::bind */
 #include <iostream>
+#include <vector>
 
 using TaskFor = std::function<void(int)>;
 
 class CBTaskFor final: public CBTask{
 public:
     CBTaskFor(TaskFor task = NULL, 
-              int begin=0, int end=0, int increment=0, 
+              int begin=0, int end=0, int increment=1, 
               Task callback = NULL): 
               CBTask{callback}, 
               _begin(begin), _end(end), _increment(increment),
@@ -21,6 +22,12 @@ public:
     CBTaskFor(CBTaskFor&& t);
     
     CBTaskFor& operator=(const CBTaskFor& t);
+    
+    static std::vector<CBTask*> slice(TaskFor task = NULL,
+                                         int begin=0, int end=0, int increment=1,
+                                         Task callback = NULL,
+                                         int minChunkSize = 0,
+                                         int threadCount = 1);
 protected:    
     void Execute() const;
 private:
