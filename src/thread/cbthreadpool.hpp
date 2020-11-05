@@ -13,12 +13,12 @@ public:
     CBThreadPool(size_t capacity);
     ~CBThreadPool();
     
-    void push_task(CBTaskAnonymous* t);
+    void push_task(CBTask* t);
 private:
     size_t _capacity;
     
     std::vector<CBPoolWorker*> _worker;
-    std::vector<CBTaskAnonymous*> _tasks;
+    std::vector<CBTask*> _tasks;
     
     SemaphorePosix _sem_task;
     

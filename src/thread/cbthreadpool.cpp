@@ -18,7 +18,7 @@ CBThreadPool::~CBThreadPool()
     _sem_task.Leave();
 }
 
-void CBThreadPool::push_task ( CBTaskAnonymous* t )
+void CBThreadPool::push_task ( CBTask* t )
 {
     _sem_task.Enter();
     _tasks.push_back(t);
