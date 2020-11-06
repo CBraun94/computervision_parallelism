@@ -44,8 +44,8 @@ private:
     
     pid_t _threadID = 0; /* linux specific */
     
-    std::atomic<bool> _finished = false;
-    std::atomic<bool> _terminated = false;
+    bool _finished = false;
+    bool _terminated = false;
     
     Event _event_start;
 

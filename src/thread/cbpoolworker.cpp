@@ -6,6 +6,8 @@
 #include <unistd.h> /* linux specific */
 #include <sys/syscall.h> /* linux specific */
 
+#include "../log.hpp"
+
 CBPoolWorker::~CBPoolWorker()
 {
     /* consider virtual CBVirtualThread::DoBeforeDestruct */
@@ -36,33 +38,38 @@ void CBPoolWorker::resume()
 
 void CBPoolWorker::ThreadMainWrapper()
 {
-    while(!terminated()){
-        usleep(100);
-        std::cout << "CBPoolWorker: wait for resume" << std::endl << std::flush;
+    while(!terminated())
+    {
+        _log("CBPoolWorker", "wait for resume");
         _event_resume.WaitForSignal();
         
-        std::cout << "CBPoolWorker: check terminated" << std::endl << std::flush;
-        if(terminated())
-            return;
+        _log("CBPoolWorker", "check terminated");
+        if(terminated()){
+                _log("CBPoolWorker", "terminate break");
+                break;
+        }
         
         CBTask* t = 0;
-        std::cout << "CBPoolWorker: gettask" << std::endl << std::flush;
-        if(_gettask != NULL){
-            do{
-            t = _gettask();
-            if (t != NULL){
-                (*t)();
-                delete t;
+        _log("CBPoolWorker", "gettask");
+        do{
+            if(_gettask != NULL)
+            {
+                t = _gettask();
+                if (t != NULL)
+                {
+                    (*t)();
+                    delete t;
                 
-                std::cout << "CBPoolWorker: task done" << std::endl << std::flush;
-            } else {
-                std::cout << "CBPoolWorker: no more work to do" << std::endl << std::flush;
+                    _log("CBPoolWorker", "task done");
+                } else 
+                {
+                    _log("CBPoolWorker", "no more work to do");
+                }
+            } else 
+            {
+                // throw exception
             }
-            
-            }while((t != NULL)&&(!terminated()));
-            
-        } else {
-            // throw exception
-        }
+        }while((t != NULL)&&(!terminated()));
     }
+    _log("CBPoolWorker", "about to terminate");
 }

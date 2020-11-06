@@ -17,26 +17,17 @@ void EventPosix::WaitForSignal()
 {
     Lock();
     while (!signalled)
-    {
         pthread_cond_wait(&cond, &mutex);
-    }
     signalled = false;
     Unlock();
 }
 
 void EventPosix::Signal()
-{
+{   
     Lock();
     signalled = true;
     Unlock();
     pthread_cond_signal(&cond);
-}
-
-void EventPosix::Reset()
-{
-    Lock();
-    signalled = false;
-    Unlock();
 }
 
 void EventPosix::Lock()

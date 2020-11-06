@@ -3,6 +3,8 @@
 #include <iostream>
 #include <functional>
 
+#include "../log.hpp"
+
 CBThreadPool::CBThreadPool ( size_t capacity )
 {
     _capacity = capacity;
@@ -11,18 +13,17 @@ CBThreadPool::CBThreadPool ( size_t capacity )
 
 CBThreadPool::~CBThreadPool()
 {
-    _sem_task.Enter();
+    //_sem_task.Enter();
     for(auto w = _worker.begin(); w != _worker.end(); w++)
         delete (*w);
     _worker.clear();
-    _sem_task.Leave();
+    //_sem_task.Leave();
 }
 
 void CBThreadPool::push_task ( CBTask* t )
 {
     _sem_task.Enter();
     _tasks.push_back(t);
-    _event_empty.Reset();
     _sem_task.Leave();
     
     resume();
@@ -33,7 +34,6 @@ void CBThreadPool::push_tasks(std::vector<CBTask*> v)
     _sem_task.Enter();
     _tasks.insert(_tasks.end(), v.begin(), v.end());
     v.clear();
-    _event_empty.Reset();
     _sem_task.Leave();
     
     resume();
@@ -46,7 +46,7 @@ void CBThreadPool::wait()
 
 void CBThreadPool::employ()
 {
-    std::cout<<"CBThreadPool about to employ " << std::endl << std::flush;
+    _log("CBThreadPool", "about to employ ");
     _sem_task.Enter();
     auto f = std::bind(&CBThreadPool::getTask, this);
     for(auto i = 0; i < _capacity; i++){
@@ -74,7 +74,7 @@ CBTask* CBThreadPool::getTask()
         t = std::move(_tasks.front());
         _tasks.erase(_tasks.begin());
     } else  {
-        std::cout<<"CBThreadPool empty " << std::endl << std::flush;
+        _log("CBThreadPool", "empty");
         _event_empty.Signal();
     }
     

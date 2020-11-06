@@ -20,7 +20,7 @@ public:
     void operator()() const;
 protected:
     /* can't bet pure virtual as it needs to be callable */
-    virtual void Execute() const {std::cout << "CBTask Execute" << std::endl << std::flush;};
+    virtual void Execute() const;
 private:
     Task callback;
 };

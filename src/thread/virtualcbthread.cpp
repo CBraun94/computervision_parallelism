@@ -4,6 +4,8 @@
 #include <algorithm>
 #include <iostream>
 
+#include "../log.hpp"
+
 VirtualCBThread::VirtualCBThread(){
     //create_pthread();
 }
@@ -62,17 +64,19 @@ void * VirtualCBThread::ThreadMainWrapperEntry(void* This)
     auto t = (( VirtualCBThread *)This);
     //->_threadID = gettid(); /* linux specific */
     
-    std::cout << "ThreadMainWrapperEntry threadID: "<< gettid() << std::endl << std::flush;
+    _log("ThreadMainWrapperEntry", "start");
     
-    sleep(1);
+    //sleep(1);
     
-    // t->_event_start.WaitForSignal();
+    t->_event_start.WaitForSignal();
     
     if(!t->terminated()){
         t->ThreadMainWrapper();
     }
     
     t->_finished = true;
+    
+    _log("ThreadMainWrapperEntry", "exit");
     
     pthread_exit(NULL);
     

@@ -2,9 +2,13 @@
 
 #include <algorithm>
 
-SemaphorePosix::SemaphorePosix()
+#include <iostream>
+
+SemaphorePosix::SemaphorePosix(unsigned int value)
 {
-    sem_init(&_sem, 0, 1);
+    auto i = sem_init(&_sem, 0, value);
+    if(i !=0)
+        std::cout<< "SemaphorePosix: sem_init ret was: " << i << std::endl << std::flush;
 }
 
 SemaphorePosix::~SemaphorePosix()
@@ -14,15 +18,24 @@ SemaphorePosix::~SemaphorePosix()
 
 SemaphorePosix::SemaphorePosix ( SemaphorePosix && s )
 {
-    std::swap(s._sem, _sem);
+    _sem=s._sem;
 }
 
 void SemaphorePosix::Enter()
 {
-    sem_wait(&_sem);
+    auto i = sem_wait(&_sem);
+    if(i !=0)
+        std::cout<< "SemaphorePosix: sem_wait ret was: " << i << std::endl << std::flush;
 }
 
 void SemaphorePosix::Leave()
 {
     sem_post(&_sem);
+}
+
+int SemaphorePosix::value()
+{
+    int r;
+    sem_getvalue(&_sem, &r);
+    return r;
 }

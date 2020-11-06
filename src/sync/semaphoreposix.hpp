@@ -5,7 +5,7 @@
 
 class SemaphorePosix{
 public:
-    SemaphorePosix();
+    SemaphorePosix(unsigned int value = 1);
     ~SemaphorePosix();
     
     SemaphorePosix(const SemaphorePosix&) =delete;
@@ -13,6 +13,8 @@ public:
     
     void Enter();
     void Leave();
+    
+    int value();
 private:
     sem_t _sem;
 };

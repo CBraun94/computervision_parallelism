@@ -1,5 +1,7 @@
 #include "cbtask.hpp"
 
+#include "../log.hpp"
+
 CBTask::CBTask ( CBTask && t )
 {
     callback = std::move(t.callback);
@@ -23,3 +25,9 @@ void CBTask::operator()() const
     if(callback != NULL)
         callback();
 }
+
+void CBTask::Execute() const
+{
+    _log("CBTask", "Execute");
+}
+
