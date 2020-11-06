@@ -29,4 +29,5 @@ target_link_libraries(opencvtest
     "distortion.hpp"
     "distortion.cpp"
     "example_one.hpp"
-    "example_two.hpp")
+    "example_two.hpp"
+    "example_three.hpp")

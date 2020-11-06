@@ -14,6 +14,8 @@ public:
     void WaitForSignal();
 
     void Signal();
+    
+    void Reset();
 private:
     std::atomic<bool> signalled;
     pthread_mutex_t mutex;

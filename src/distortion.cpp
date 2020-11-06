@@ -10,10 +10,10 @@
  * Kn: radial distortion coefficient
  * Pn: tangential distortion coefficient
  */
-Point2d blob(Point2d pu, Point2d pc, double K1, double K2, double P1, double P2, double P3, double P4){
-    Point2d pd;
+cv::Point2d blob(cv::Point2d pu, cv::Point2d pc, double K1, double K2, double P1, double P2, double P3, double P4){
+    cv::Point2d pd;
     
-    auto pdeltad = Point2d( pu.x-pc.x,pu.y-pc.y);
+    auto pdeltad = cv::Point2d( pu.x-pc.x,pu.y-pc.y);
     
     double r = std::sqrt(std::pow( pdeltad.x, 2)+std::pow( pdeltad.y, 2));
     double r2 = std::pow(r, 2);

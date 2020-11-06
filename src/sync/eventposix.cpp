@@ -32,6 +32,13 @@ void EventPosix::Signal()
     pthread_cond_signal(&cond);
 }
 
+void EventPosix::Reset()
+{
+    Lock();
+    signalled = false;
+    Unlock();
+}
+
 void EventPosix::Lock()
 {
     pthread_mutex_lock(&mutex);

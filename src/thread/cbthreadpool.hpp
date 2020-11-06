@@ -5,6 +5,7 @@
 #include "../task/cbtask.hpp"
 #include "../task/cbtaskanonymous.hpp"
 #include "../sync/semaphoreposix.hpp"
+#include "../sync/eventposix.hpp"
 
 #include <vector>
 
@@ -15,6 +16,8 @@ public:
     
     void push_task(CBTask* t);
     void push_tasks(std::vector<CBTask*> v);
+    
+    void wait();
 private:
     size_t _capacity;
     
@@ -22,6 +25,8 @@ private:
     std::vector<CBTask*> _tasks;
     
     SemaphorePosix _sem_task;
+    
+    EventPosix _event_empty;
     
     void employ();
     void resume();

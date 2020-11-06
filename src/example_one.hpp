@@ -26,12 +26,16 @@ using namespace cv;
  */
 using MatAccess = Vec3b;
 
+namespace exone{
+
 constexpr auto K1 = 0.000005;
 constexpr auto K2 = 0.0;
 constexpr auto P1 = 0.00000001;
 constexpr auto P2 = -0.00000001;
 constexpr auto P3 = 0.0;
 constexpr auto P4 = 0.0;
+
+constexpr auto imsize = 512;
 
 static DistortionCoefficient 
     dcRadial(K1, K2),
@@ -63,7 +67,7 @@ void grid(InputOutputArray img,
 
 Mat doimg()
 {
-    auto s = 512;
+    auto s = imsize;
     
     Mat m(Size(s, s), CV_8UC3);
     
@@ -165,15 +169,19 @@ Mat doundistortfull(const Mat& s)
     return d;
 }
 
+}
+
 void example_one()
 {
-    auto m = doimg();
+    auto m = exone::doimg();
     
-    dodistortk(m);
-    dodistortp(m);
-    auto d = dodistortfull(m);
-    doundistortfull(d);
+    exone::dodistortk(m);
+    exone::dodistortp(m);
+    auto d = exone::dodistortfull(m);
+    exone::doundistortfull(d);
     
     auto k = waitKey(0);
 }
+
+
 #endif // EXAMPLE_ONE_HPP_INCLUDED

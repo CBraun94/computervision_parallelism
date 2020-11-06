@@ -3,9 +3,7 @@
 
 #include <opencv4/opencv2/opencv.hpp>
 
-using namespace cv;
-
-Point2d blob(Point2d pu, Point2d pc, double K1, double K2 = 0.0, double P1 = 0.0, double P2 = 0.0, double P3 = 0.0, double P4 = 0.0);
+cv::Point2d blob(cv::Point2d pu, cv::Point2d pc, double K1, double K2 = 0.0, double P1 = 0.0, double P2 = 0.0, double P3 = 0.0, double P4 = 0.0);
 
 class DistortionCoefficient{
 public:
@@ -17,7 +15,7 @@ public:
     double K1, K2;
     double P1, P2, P3, P4;
     
-    Point2d transform(Point2d pu, Point2d pc);
+    cv::Point2d transform(cv::Point2d pu, cv::Point2d pc);
 };
 
 #endif // DISTORTION_HPP_INCLUDED

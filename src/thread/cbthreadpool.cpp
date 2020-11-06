@@ -22,6 +22,7 @@ void CBThreadPool::push_task ( CBTask* t )
 {
     _sem_task.Enter();
     _tasks.push_back(t);
+    _event_empty.Reset();
     _sem_task.Leave();
     
     resume();
@@ -32,9 +33,15 @@ void CBThreadPool::push_tasks(std::vector<CBTask*> v)
     _sem_task.Enter();
     _tasks.insert(_tasks.end(), v.begin(), v.end());
     v.clear();
+    _event_empty.Reset();
     _sem_task.Leave();
     
     resume();
+}
+
+void CBThreadPool::wait()
+{
+    _event_empty.WaitForSignal();
 }
 
 void CBThreadPool::employ()
@@ -67,8 +74,10 @@ CBTask* CBThreadPool::getTask()
         t = std::move(_tasks.front());
         _tasks.erase(_tasks.begin());
     } else  {
-        /* consider replacing return value CBTask */
+        std::cout<<"CBThreadPool empty " << std::endl << std::flush;
+        _event_empty.Signal();
     }
+    
     _sem_task.Leave();
     return t;
 }
