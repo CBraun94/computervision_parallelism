@@ -31,4 +31,5 @@ target_link_libraries(opencvtest
     "example_one.hpp"
     "example_two.hpp"
     "example_three.hpp"
+    "example_four.hpp"
     "log.hpp")

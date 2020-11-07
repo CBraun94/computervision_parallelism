@@ -6,10 +6,6 @@
 #include "task/cbtaskfor.hpp"
 #include "sync/semaphoreposix.hpp"
 
-#include <sys/types.h> /* linux specific */
-#include <unistd.h> /* linux specific */
-#include <sys/syscall.h> /* linux specific */
-
 #include <opencv4/opencv2/opencv.hpp>
 
 #include <cmath>
@@ -19,7 +15,8 @@
 
 namespace exthree{
     constexpr auto imsize = 512;
-
+    constexpr auto imwidth = imsize;
+    constexpr auto imheight = imsize;
 
 static std::map<pid_t, cv::Vec3b> tmap;
 
@@ -69,7 +66,7 @@ cv::Mat example_three_two(int threadCount = 8, int minChunkSize = 0)
 
 void example_three(){
     std::cout<<"start of example_three" << std::endl << std::flush;
-    
+
     auto a = exthree::example_three_two(32, 5);
     
     std::cout<<"start of example_three 50" << std::endl << std::flush;
@@ -80,11 +77,11 @@ void example_three(){
     
     auto b = exthree::example_three_two(4, exthree::imsize);
     
-    cv::imshow("randcol_two", b);
+    cv::imshow("randcol_two", b); 
     
     std::cout<<"end of example_three" << std::endl << std::flush;
     
-     k = cv::waitKey();
+    k = cv::waitKey();
 }
 
 #endif // EXAMPLE_THREE_HPP_INCLUDED
