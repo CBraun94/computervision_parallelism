@@ -1,0 +1,92 @@
+\documentclass{beamer}
+
+%\beamertemplatesolidbackgroundcolor{black!5}
+%\beamertemplatetransparentcovered
+
+\usepackage{amsmath}
+\usepackage{amssymb}
+
+\title{Parallelisierung in Computer Vision}
+\subtitle{Grundlagen mit Implementierungsbeispielen}
+
+\author[Braun]{Christian Braun}
+
+\begin{document}
+
+\begin{frame}
+  \titlepage
+\end{frame}
+
+\begin{frame}
+  \frametitle{Übersicht}
+  \tableofcontents
+\end{frame}
+
+\begin{frame}
+  \frametitle{Konventationen bezüglich Computer Vision}
+  \framesubtitle{Um eine gemeinsame Grundlage zu schaffen}
+  \begin{itemize}
+    \item Abbildungsfunktionen können ein n-Tupel auf ein m-Tupel abbilden, mit n,m $\in \mathbb{N}$
+    \item Ein Tupel besteht aus einer Matrix(c,r) von Pixeln, für die n = c*r gilt mit c,r $\in \mathbb{N} \&$ c,r $\geq$ 1
+    \item Ein Pixel ist ein 3-wertiges Skalar welches die Farben in Reihenfolge Blau, Grün und Rot darstellt
+    \item Ein (Kamera-)Bild ist eine Matrix(c,r) 
+  \end{itemize}
+\end{frame}
+
+\section{Einführung}
+\subsection{Beispiele aus der Computer Vision}
+\begin{frame}<1>
+  \frametitle{Beispiele aus der Computer Vision}
+  %\framesubtitle{}
+  \begin{itemize}
+    \item Korrektur von Abbildungsfehlern
+    \item Skalierung eines Bildes
+  \end{itemize}
+\end{frame}
+
+\begin{frame}<2>
+  \frametitle{Unterschiedliche Arten von Parallelisierung}
+  \framesubtitle{Bei der Parallelisierung sind zwei Begebenheiten zu unterscheiden}
+  \begin{itemize}
+    \item Ob eine einzelne Aufgabe auf mehrere aufgeteilt werden soll, 
+    \item oder mehrere von einander unabhängige Aufgaben parallelisiert werden sollen.
+  \end{itemize}
+
+\end{frame}
+
+\begin{frame}<3>
+  \frametitle{Selbststehende Aufgabe aufteilen}
+  \framesubtitle{Die zu untersuchenden Eigenschaften}
+
+  \begin{itemize}
+    \item U ist die Menge der Ursprungspositionen im Speicher
+    \item Z ist die Menge der Zielpositionen im Speicher
+    \item $\digamma$ ist die Funktion, die U auf Z abbildet
+  \end{itemize}
+
+  \begin{itemize}
+    \item Die Größe und Position eines jeden einzelnen Elementes der Eingabemenge ist bekannt
+    \item Die Größe und Position eines jeden einzelnen Elementes der Ausgabemenge ist bekannt
+    \item Die Bearbeitungszeit eines Elementes
+  \end{itemize}
+
+\end{frame}
+
+\begin{frame}<4>
+  \frametitle{Beispiel: Skalierung eines Bildes}
+  \framesubtitle{Halbierung des Bildes wird verwendet um in einer geringeren Datenmenge Bereiche auszuschließen}
+
+  \begin{itemize}
+    \item Pixel werden in einem n-Tupel gebündelt, wobei n eine endliche Zahl ist 
+    \item Beispiel: Wird ein Bild halbiert, wird ein 4-Tupel auf ein 1-Tupel abgebildet. Dabei werden 2x2 Pixel zu einem zusammengefasst
+  \end{itemize}
+
+  \begin{itemize}
+    \item Ist die Positionsänderung eines Pixels injektiv, wird jeder Pixel aus U genau einem Pixel aus Z zugewiesen.
+
+    \item ist die Positionsänderung eines Pixel dagegen surjektiv, kann ein Pixel aus Z durch mehrere Pixel aus U beschrieben werden.
+  \end{itemize}
+
+\end{frame}
+
+\end{document}
