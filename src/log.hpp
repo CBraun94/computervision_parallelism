@@ -7,9 +7,46 @@
 
 #include <string>
 
-inline void _log(std::string caller, std::string msg)
+#include <chrono> 
+
+namespace cb{
+
+constexpr auto _delimiter = ".";
+constexpr auto _ex1 = "one";
+constexpr auto _ex2 = "two";
+constexpr auto _ex3 = "three";
+constexpr auto _ex4 = "four";
+constexpr auto _ex5 = "five";
+constexpr auto _ex6 = "six";
+constexpr auto _ex7 = "seven";
+constexpr auto _ex8 = "eight";
+constexpr auto _ex9 = "nine";
+
+using LogFunc = std::function<void(void)>;
+
+inline void log(std::string caller, std::string msg)
 {
     std::cout << "tid" << gettid()<< " - "<< caller <<" - " << msg << std::endl << std::flush;
+}
+
+inline void timetaken(std::string name, LogFunc f)
+{
+    auto start = std::chrono::high_resolution_clock::now(); 
+    f();
+    auto stop = std::chrono::high_resolution_clock::now(); 
+    
+    auto duration = duration_cast<std::chrono::milliseconds>(stop - start); 
+  
+    std::cout << "Time taken by " << name << ": " << duration.count() << " milliseconds" << std::endl << std::flush;
+}
+
+inline void run_example(std::string ex, LogFunc f)
+{
+    std::cout<<"start of example: " << ex << std::endl << std::flush;
+    f();
+    std::cout<<"end of example: " << ex << std::endl << std::flush;
+}
+
 }
 
 #endif // LOG_HPP_INCLUDED

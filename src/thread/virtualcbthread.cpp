@@ -62,11 +62,8 @@ pid_t VirtualCBThread::threadID() const
 void * VirtualCBThread::ThreadMainWrapperEntry(void* This)
 {
     auto t = (( VirtualCBThread *)This);
-    //->_threadID = gettid(); /* linux specific */
     
-    _log("ThreadMainWrapperEntry", "start");
-    
-    //sleep(1);
+    cb::log("ThreadMainWrapperEntry", "start");
     
     t->_event_start.WaitForSignal();
     
@@ -76,7 +73,7 @@ void * VirtualCBThread::ThreadMainWrapperEntry(void* This)
     
     t->_finished = true;
     
-    _log("ThreadMainWrapperEntry", "exit");
+    cb::log("ThreadMainWrapperEntry", "exit");
     
     pthread_exit(NULL);
     

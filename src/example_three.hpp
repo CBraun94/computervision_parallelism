@@ -46,18 +46,11 @@ void randcol(cv::Mat& m, int i)
 
 cv::Mat example_three_two(int threadCount = 8, int minChunkSize = 0)
 {
-    std::cout<<"example_three_two" << std::endl << std::flush;
-    
     CBThreadPool p(threadCount);
     
     cv::Mat m(cv::Size(imsize, imsize), CV_8UC3);
     
     p.push_tasks(CBTaskFor::slice(std::bind(randcol, m, std::placeholders::_1), 0, m.cols*m.rows, 1, NULL, minChunkSize));
-
-    //sleep(1);
-    std::cout<<"example_three_two: wait start" << std::endl << std::flush;
-    p.wait();
-    std::cout<<"example_three_two: wait end" << std::endl << std::flush;
 
     return m;
 }
@@ -65,23 +58,13 @@ cv::Mat example_three_two(int threadCount = 8, int minChunkSize = 0)
 }
 
 void example_three(){
-    std::cout<<"start of example_three" << std::endl << std::flush;
-
     auto a = exthree::example_three_two(32, 5);
-    
-    std::cout<<"start of example_three 50" << std::endl << std::flush;
-    
-    cv::imshow("randcol_one", a);
-    
-    auto k = cv::waitKey();
-    
     auto b = exthree::example_three_two(4, exthree::imsize);
     
+    cv::imshow("randcol_one", a);
     cv::imshow("randcol_two", b); 
     
-    std::cout<<"end of example_three" << std::endl << std::flush;
-    
-    k = cv::waitKey();
+    auto k = cv::waitKey();
 }
 
 #endif // EXAMPLE_THREE_HPP_INCLUDED

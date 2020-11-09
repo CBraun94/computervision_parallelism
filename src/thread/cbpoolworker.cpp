@@ -40,12 +40,12 @@ void CBPoolWorker::ThreadMainWrapper()
 {
     while(!terminated())
     {
-        _log("CBPoolWorker", "wait for resume");
+        cb::log("CBPoolWorker", "wait for resume");
         _event_resume.WaitForSignal();
         
-        _log("CBPoolWorker", "check terminated");
+        cb::log("CBPoolWorker", "check terminated");
         if(terminated()){
-                _log("CBPoolWorker", "terminate break");
+                cb::log("CBPoolWorker", "terminate break");
                 break;
         } else {
            _work(); 
@@ -55,13 +55,13 @@ void CBPoolWorker::ThreadMainWrapper()
         
         
     }
-    _log("CBPoolWorker", "about to terminate");
+    cb::log("CBPoolWorker", "about to terminate");
 }
 
 void CBPoolWorker::_work()
 {
     CBTask* t = 0;
-    _log("CBPoolWorker", "gettask");
+    cb::log("CBPoolWorker", "gettask");
     if(_gettask != NULL)
     {
         _sem_working.get()->Enter();
@@ -72,10 +72,10 @@ void CBPoolWorker::_work()
                 (*t)();
                 delete t;
                 
-                _log("CBPoolWorker", "task done");
+                cb::log("CBPoolWorker", "task done");
             } else 
             {
-                _log("CBPoolWorker", "no more work to do");
+                cb::log("CBPoolWorker", "no more work to do");
             } 
         }while((t != NULL)&&(!terminated()));
         _sem_working.get()->Leave();

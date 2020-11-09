@@ -18,8 +18,8 @@ public:
     };  
     ~CBThreadPool();
     
-    void push_task(CBTask* t);
-    void push_tasks(std::vector<CBTask*> v);
+    void push_task(CBTask* t, bool wait = true);
+    void push_tasks(std::vector<CBTask*> v, bool wait = true);
     
     void wait();
 private:

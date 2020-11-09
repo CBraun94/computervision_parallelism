@@ -28,6 +28,6 @@ void CBTask::operator()() const
 
 void CBTask::Execute() const
 {
-    _log("CBTask", "Execute");
+    cb::log("CBTask", "Execute");
 }
 

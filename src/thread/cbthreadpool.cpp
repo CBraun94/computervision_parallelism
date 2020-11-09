@@ -14,16 +14,18 @@ CBThreadPool::~CBThreadPool()
     //_sem_task.Leave();
 }
 
-void CBThreadPool::push_task ( CBTask* t )
+void CBThreadPool::push_task (CBTask* t, bool wait)
 {
     _sem_task.Enter();
     _tasks.push_back(t);
     _sem_task.Leave();
     
     resume();
+    
+    this->wait();
 }
 
-void CBThreadPool::push_tasks(std::vector<CBTask*> v)
+void CBThreadPool::push_tasks(std::vector<CBTask*> v, bool wait)
 {
     _sem_task.Enter();
     _tasks.insert(_tasks.end(), v.begin(), v.end());
@@ -31,6 +33,8 @@ void CBThreadPool::push_tasks(std::vector<CBTask*> v)
     _sem_task.Leave();
     
     resume();
+    
+    this->wait();
 }
 
 void CBThreadPool::wait()
@@ -42,7 +46,7 @@ void CBThreadPool::wait()
 
 void CBThreadPool::employ()
 {
-    _log("CBThreadPool", "about to employ ");
+    cb::log("CBThreadPool", "about to employ ");
     _sem_task.Enter();
     auto f = std::bind(&CBThreadPool::getTask, this);
     for(auto i = 0; i < _capacity; i++){
@@ -70,7 +74,7 @@ CBTask* CBThreadPool::getTask()
         t = std::move(_tasks.front());
         _tasks.erase(_tasks.begin());
     } else  {
-        _log("CBThreadPool", "empty");
+        cb::log("CBThreadPool", "empty");
         _event_empty.Signal();
     }
     
