@@ -8,10 +8,14 @@
 #include "../sync/eventposix.hpp"
 
 #include <vector>
+#include <memory>
 
 class CBThreadPool{
 public:
-    CBThreadPool(size_t capacity);
+    CBThreadPool(size_t capacity): _capacity(capacity){
+        _sem_working = std::make_shared<SemaphorePosix>(capacity);
+        employ();
+    };  
     ~CBThreadPool();
     
     void push_task(CBTask* t);
@@ -25,6 +29,7 @@ private:
     std::vector<CBTask*> _tasks;
     
     SemaphorePosix _sem_task;
+    std::shared_ptr<SemaphorePosix> _sem_working;
     
     EventPosix _event_empty;
     

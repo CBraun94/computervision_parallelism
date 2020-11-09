@@ -47,29 +47,40 @@ void CBPoolWorker::ThreadMainWrapper()
         if(terminated()){
                 _log("CBPoolWorker", "terminate break");
                 break;
+        } else {
+           _work(); 
         }
         
-        CBTask* t = 0;
-        _log("CBPoolWorker", "gettask");
-        do{
-            if(_gettask != NULL)
-            {
-                t = _gettask();
-                if (t != NULL)
-                {
-                    (*t)();
-                    delete t;
-                
-                    _log("CBPoolWorker", "task done");
-                } else 
-                {
-                    _log("CBPoolWorker", "no more work to do");
-                }
-            } else 
-            {
-                // throw exception
-            }
-        }while((t != NULL)&&(!terminated()));
+        
+        
+        
     }
     _log("CBPoolWorker", "about to terminate");
+}
+
+void CBPoolWorker::_work()
+{
+    CBTask* t = 0;
+    _log("CBPoolWorker", "gettask");
+    if(_gettask != NULL)
+    {
+        _sem_working.get()->Enter();
+        do{
+            t = _gettask();
+            if (t != NULL)
+            {
+                (*t)();
+                delete t;
+                
+                _log("CBPoolWorker", "task done");
+            } else 
+            {
+                _log("CBPoolWorker", "no more work to do");
+            } 
+        }while((t != NULL)&&(!terminated()));
+        _sem_working.get()->Leave();
+    } else 
+    {
+        // throw exception
+    }
 }

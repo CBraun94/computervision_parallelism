@@ -5,12 +5,6 @@
 
 #include "../log.hpp"
 
-CBThreadPool::CBThreadPool ( size_t capacity )
-{
-    _capacity = capacity;
-    employ();
-}
-
 CBThreadPool::~CBThreadPool()
 {
     //_sem_task.Enter();
@@ -42,6 +36,8 @@ void CBThreadPool::push_tasks(std::vector<CBTask*> v)
 void CBThreadPool::wait()
 {
     _event_empty.WaitForSignal();
+    _sem_working.get()->Enter();
+    _sem_working.get()->Leave();
 }
 
 void CBThreadPool::employ()
@@ -50,7 +46,7 @@ void CBThreadPool::employ()
     _sem_task.Enter();
     auto f = std::bind(&CBThreadPool::getTask, this);
     for(auto i = 0; i < _capacity; i++){
-        _worker.push_back(new CBPoolWorker(f));
+        _worker.push_back(new CBPoolWorker(_sem_working, f));
         (*_worker.back()).start();
     }
     _sem_task.Leave();

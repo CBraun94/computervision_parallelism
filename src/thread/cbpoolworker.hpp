@@ -3,15 +3,19 @@
 
 #include "virtualcbthread.hpp"
 #include "../task/cbtask.hpp"
+#include "../sync/semaphoreposix.hpp"
 
 #include <functional>
-//#include <cbtask.hpp>
+#include <memory>
 
 using GetTaskFunction = std::function<CBTask*(void)>;
 
 class CBPoolWorker final: public VirtualCBThread{
 public:
-    CBPoolWorker(GetTaskFunction gettask = NULL): _gettask(gettask) {};
+    CBPoolWorker(std::shared_ptr<SemaphorePosix> sem_working, 
+                 GetTaskFunction gettask = NULL): 
+                 _sem_working(sem_working),
+                 _gettask(gettask) {};
     ~CBPoolWorker();
     
     CBPoolWorker(const CBPoolWorker &w);
@@ -23,10 +27,13 @@ public:
 protected:
     void ThreadMainWrapper();
 private:
+    std::shared_ptr<SemaphorePosix> _sem_working;
     GetTaskFunction _gettask = NULL;
     
     /* consider replacing with non-manuel reset event (not yet implemented) */
     Event _event_resume;
+    
+    void _work();
 };
 
 #endif // CBPOOLWORKER_HPP_INCLUDED

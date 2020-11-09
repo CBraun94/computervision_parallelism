@@ -77,26 +77,26 @@ void example_four(){
     std::cout<<"start of example_four" << std::endl << std::flush;
 
     auto start = std::chrono::high_resolution_clock::now(); 
-    //auto c = exfour::example_four_one();
+    auto c = exfour::example_four_one();
     auto stop = std::chrono::high_resolution_clock::now(); 
     
     auto duration = duration_cast<std::chrono::milliseconds>(stop - start); 
   
     std::cout << "Time taken singlethreaded: " << duration.count() << " milliseconds" << std::endl << std::flush; 
     
-    start = std::chrono::high_resolution_clock::now(); 
-    auto d = exfour::example_four_two();
-    stop = std::chrono::high_resolution_clock::now();
+    //tart = std::chrono::high_resolution_clock::now(); 
+    //auto d = exfour::example_four_two();
+    //stop = std::chrono::high_resolution_clock::now();
     
-    duration = duration_cast<std::chrono::milliseconds>(stop - start); 
+    //duration = duration_cast<std::chrono::milliseconds>(stop - start); 
   
-    std::cout << "Time taken multithreaded: " << duration.count() << " milliseconds" << std::endl << std::flush; 
+    //std::cout << "Time taken multithreaded: " << duration.count() << " milliseconds" << std::endl << std::flush; 
     
-    cv::imshow("mandelbrot", d);
+    cv::imshow("mandelbrot", c);
     
-    //cv::imwrite("mandelbrot3.png", c);
+    //cv::imwrite("mandelbrotbig.png", d);
     
-    std::cout<<"end of example_three" << std::endl << std::flush;
+    std::cout<<"end of example_four" << std::endl << std::flush;
     
     auto k = cv::waitKey();
 }
