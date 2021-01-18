@@ -70,13 +70,25 @@
   \frametitle{Unterschiedliche Arten von Parallelisierung}
   \framesubtitle{Bei der Parallelisierung sind zwei Begebenheiten zu unterscheiden}
   \begin{itemize}
-    \item Ob eine einzelne Aufgabe auf mehrere aufgeteilt werden soll, 
-    \item oder mehrere von einander unabhängige Aufgaben parallelisiert werden sollen.
+    \item Datenparallelisierung - Aufteilen einer einzelnen Aufgabe
+    \item Aufgabenparallelisierung - Aufteilen mehrerer von einander unabhängige Aufgaben
   \end{itemize}
 
 \end{frame}
 
 \begin{frame}<5>
+  \frametitle{Ziel der Analyse}
+  \framesubtitle{Bei der Aufteilung einer einzelnen Aufgabe}
+  \begin{itemize}
+    \item weniger Synchronisierungaufwand
+    \item Vermeidung der Notwendigkeit zur Absicherung
+    \item Isolierung einer Aufgabe  (divide and conquer)
+    \item Kapselung für Fehlerfälle (Unhandled Exception)
+  \end{itemize}
+
+\end{frame}
+
+\begin{frame}<6>
   \frametitle{Gegenüberstellung Platzproblem}
   \framesubtitle{Größe und Position vor und nach der Abbildung}
   Übersetzung von Texten:
@@ -95,7 +107,7 @@
   
 \end{frame}
 
-\begin{frame}<6>
+\begin{frame}<7>
   \frametitle{Selbststehende Aufgabe aufteilen}
   \framesubtitle{Die zu untersuchenden Eigenschaften}
 
@@ -113,7 +125,7 @@
 
 \end{frame}
 
-\begin{frame}<7>
+\begin{frame}<8>
   \frametitle{Weitere Eigenschaften}
   \framesubtitle{}
   
@@ -124,7 +136,7 @@
   
 \end{frame}
 
-\begin{frame}<8>
+\begin{frame}<9>
   \frametitle{Zwischenerkenntnisse}
   \framesubtitle{}
     
@@ -140,7 +152,7 @@
   
 \end{frame}
 
-\begin{frame}<8>
+\begin{frame}<10>
   \frametitle{Beispiel: Skalierung eines Bildes}
   \framesubtitle{Halbierung des Bildes wird verwendet um in einer geringeren Datenmenge Bereiche auszuschließen}
 
@@ -152,7 +164,7 @@
 \end{frame}
 
 
-\begin{frame}<7>
+\begin{frame}<11>
   \frametitle{Bearbeitungszeit einzelner Elemente}
   \framesubtitle{}
   
@@ -163,7 +175,7 @@
 
 \end{frame}
 
-\begin{frame}<9>
+\begin{frame}<12>
   \frametitle{Amdahlsches Gesetz}
   \framesubtitle{Geschwindigkeitsgewinn eines parallelisierbaren Problems}
 
@@ -187,7 +199,19 @@
   
 \end{frame}
 
-\begin{frame}<10>
+\begin{frame}<13>
+  \frametitle{Amdahlsches Gesetz}
+  \framesubtitle{}
+
+    \begin{itemize}
+    \item  Die Funktion hat für jede Eingabe eine obere Schranke
+    \item  Kann 50\% einer Aufgabe parallel zum restlichen Teil ausgeführt werden, ist die obere Schranke 2
+    \item  Das Gesetz gbit eine schnelle Einschätzung über den Geschwindigkeitsgewinn
+  \end{itemize}
+  
+\end{frame}
+
+\begin{frame}<14>
   \frametitle{Parallelisierung einer For-Schleife}
   \framesubtitle{}
   
@@ -200,7 +224,7 @@
 
 \end{frame}
 
-\begin{frame}<11>
+\begin{frame}<15>
   \frametitle{Aufgabenteilung in Chunks}
   \framesubtitle{Geschwindigkeitsgewinn eines parallelisierbaren Problems}
   
@@ -215,7 +239,7 @@
 
 \end{frame}
 
-\begin{frame}<12>
+\begin{frame}<16>
   \frametitle{Aufgabenteilung in Chunks}
   \framesubtitle{Geschwindigkeitsgewinn eines parallelisierbaren Problems}
   
@@ -240,20 +264,20 @@
 
 \end{frame}
 
-\begin{frame}<13>
+\begin{frame}<17>
   \frametitle{Threadpools}
   \framesubtitle{}
 
     \begin{itemize}
+    \item  Mehrere Threads werden in einem Objekt gekapselt
+    \item  Die Threads sind in einem wartenden Zustand, bis neue Aufgaben kommen 
     \item  Objectpooling reduziert den Initialisierungsaufwand
-    \item  
-    \item   
-    \item  
+    \item  Der Verwaltungsaufwand für Threads wird von der tatsächlichen Bearbeitung abgekapselt
   \end{itemize}
   
 \end{frame}
 
-\begin{frame}<14>
+\begin{frame}<18>
   \frametitle{Taskmanager ähnliches Konstrukt}
   \framesubtitle{kontrolliert eine begrenze Anzahl an Threads}
 
@@ -266,7 +290,7 @@
   
 \end{frame}
 
-\begin{frame}<15>
+\begin{frame}<19>
   \frametitle{Literatur}
   \framesubtitle{}
 
