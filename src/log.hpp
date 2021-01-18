@@ -35,9 +35,10 @@ inline void timetaken(std::string name, LogFunc f)
     f();
     auto stop = std::chrono::high_resolution_clock::now(); 
     
-    auto duration = duration_cast<std::chrono::milliseconds>(stop - start); 
+    auto durationms = duration_cast<std::chrono::milliseconds>(stop - start); 
+    auto durationsec = duration_cast<std::chrono::seconds>(stop - start);
   
-    std::cout << "Time taken by " << name << ": " << duration.count() << " milliseconds" << std::endl << std::flush;
+    std::cout << "Time taken by " << name << ": " << durationsec.count() << " seconds or " << durationms.count() << " milliseconds" << std::endl << std::flush;
 }
 
 inline void run_example(std::string ex, LogFunc f)

@@ -50,10 +50,6 @@ void CBPoolWorker::ThreadMainWrapper()
         } else {
            _work(); 
         }
-        
-        
-        
-        
     }
     cb::log("CBPoolWorker", "about to terminate");
 }

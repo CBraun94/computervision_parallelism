@@ -6,6 +6,8 @@
 #include "task/cbtaskfor.hpp"
 #include "sync/semaphoreposix.hpp"
 
+#include "log.hpp"
+
 #include <opencv4/opencv2/opencv.hpp>
 
 #include <cmath>
@@ -45,33 +47,36 @@ void mandelbrot_loop(cv::Mat& m, int w)
         m.at<cv::Vec3b>(cv::Point(w,h)) = cv::Vec3b(0,0,value_mandelbrot(w,h,imwidth,imheight));
 }
 
-cv::Mat example_four_one()
-{    
-    cv::Mat m(cv::Size(imwidth, imheight), CV_8UC3);
-    
+void example_four_one(cv::Mat &m)
+{        
     for(auto w=0;w<imwidth;w++)
         for(auto h=0;h<imheight;h++)
             m.at<cv::Vec3b>(cv::Point(w,h)) = cv::Vec3b(0,0,value_mandelbrot(w,h,imwidth,imheight));
-
-    return m;
 }
 
-cv::Mat example_four_two()
+void example_four_two(cv::Mat &m)
 {    
     CBThreadPool p(4);
     
-    cv::Mat m(cv::Size(imwidth, imheight), CV_8UC3);
-    
     p.push_tasks((CBTaskFor::slice(std::bind(mandelbrot_loop, m, std::placeholders::_1), 0, imwidth-1, 1, NULL, 1, 4)));
+}
 
-    return m;
+void example_four_three(cv::Mat &m)
+{    
+    CBThreadPool p(4);
+    
+    p.push_tasks((CBTaskFor::slice(std::bind(mandelbrot_loop, m, std::placeholders::_1), 0, imwidth-1, 1, NULL, 100, 4)));
 }
 
 }
 
 void example_four(){    
-    auto c = exfour::example_four_one();
-    auto d = exfour::example_four_two();
+    using namespace exfour;
+    cv::Mat c(cv::Size(imwidth, imheight), CV_8UC3),d(cv::Size(imwidth, imheight), CV_8UC3),e(cv::Size(imwidth, imheight), CV_8UC3);
+    
+    cb::timetaken("mandelbrot parallel, minchunksize line*51", std::bind(exfour::example_four_three, e));
+    cb::timetaken("mandelbrot parallel, minchunksize line", std::bind(exfour::example_four_two, d));
+    cb::timetaken("mandelbrot sequential", std::bind(exfour::example_four_one, c));  
     
     cv::imshow("mandelbrot", c);
     

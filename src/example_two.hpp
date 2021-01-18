@@ -14,7 +14,7 @@
 #include <sys/syscall.h> /* linux specific */
 
 constexpr auto task_count = 5;
-constexpr auto loop_end = 100;
+constexpr auto loop_end = 1000;
 constexpr auto minChunkSize = 10;
 
 void counter_for(int i){

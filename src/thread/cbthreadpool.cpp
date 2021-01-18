@@ -7,6 +7,7 @@
 
 CBThreadPool::~CBThreadPool()
 {
+    wait();
     //_sem_task.Enter();
     for(auto w = _worker.begin(); w != _worker.end(); w++)
         delete (*w);
@@ -18,9 +19,11 @@ void CBThreadPool::push_task (CBTask* t, bool wait)
 {
     _sem_task.Enter();
     _tasks.push_back(t);
+    t = NULL;
+    resume();
     _sem_task.Leave();
     
-    resume();
+    
     
     this->wait();
 }
@@ -42,6 +45,7 @@ void CBThreadPool::wait()
     _event_empty.WaitForSignal();
     _sem_working.get()->Enter();
     _sem_working.get()->Leave();
+    sleep(1);
 }
 
 void CBThreadPool::employ()
@@ -58,11 +62,11 @@ void CBThreadPool::employ()
 
 void CBThreadPool::resume()
 {
-    _sem_task.Enter();
+    //_sem_task.Enter();
     for(auto it = _worker.begin(); it != _worker.end(); it++){
         (*(*it)).resume();
     }
-    _sem_task.Leave();
+    //_sem_task.Leave();
 }
 
 CBTask* CBThreadPool::getTask()
