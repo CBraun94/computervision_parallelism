@@ -30,8 +30,8 @@ private:
     std::shared_ptr<SemaphorePosix> _sem_working;
     GetTaskFunction _gettask = NULL;
     
-    /* consider replacing with non-manuel reset event (not yet implemented) */
     Event _event_resume;
+    Event _event_finalized=true;
     
     void _work();
 };

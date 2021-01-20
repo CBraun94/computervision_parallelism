@@ -13,6 +13,7 @@ CBPoolWorker::~CBPoolWorker()
     /* consider virtual CBVirtualThread::DoBeforeDestruct */
     terminate();
     resume();
+    _event_finalized.WaitForSignal();
 }
 
 CBPoolWorker::CBPoolWorker ( const CBPoolWorker& w )
@@ -51,6 +52,7 @@ void CBPoolWorker::ThreadMainWrapper()
            _work(); 
         }
     }
+    _event_finalized.Signal();
     cb::log("CBPoolWorker", "about to terminate");
 }
 

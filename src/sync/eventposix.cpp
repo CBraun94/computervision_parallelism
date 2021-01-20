@@ -1,8 +1,10 @@
 #include "eventposix.hpp"
 
-EventPosix::EventPosix()
+EventPosix::EventPosix(bool manualreset)
 {
     signalled = false;
+    _manualreset = manualreset;
+    
     pthread_mutex_init(&mutex, NULL);
     pthread_cond_init(&cond, NULL);
 }
@@ -18,7 +20,10 @@ void EventPosix::WaitForSignal()
     Lock();
     while (!signalled)
         pthread_cond_wait(&cond, &mutex);
-    signalled = false;
+    
+    if(!_manualreset)
+        signalled = false;
+    
     Unlock();
 }
 
@@ -28,6 +33,13 @@ void EventPosix::Signal()
     signalled = true;
     Unlock();
     pthread_cond_signal(&cond);
+}
+
+void EventPosix::Reset()
+{   
+    Lock();
+    signalled = false;
+    Unlock();
 }
 
 void EventPosix::Lock()

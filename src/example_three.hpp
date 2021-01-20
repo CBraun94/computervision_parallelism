@@ -58,7 +58,7 @@ cv::Mat example_three_two(int threadCount = 8, int minChunkSize = 0)
 }
 
 void example_three(){
-    auto a = exthree::example_three_two(32, 5);
+    auto a = exthree::example_three_two(32, 25);
     auto b = exthree::example_three_two(4, exthree::imsize);
     
     cv::imshow("randcol_one", a);
