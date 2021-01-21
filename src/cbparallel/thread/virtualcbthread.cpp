@@ -4,7 +4,7 @@
 #include <algorithm>
 #include <iostream>
 
-#include "../log.hpp"
+#include "../../log.hpp"
 
 VirtualCBThread::VirtualCBThread(){
     //create_pthread();

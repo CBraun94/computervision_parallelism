@@ -9,20 +9,13 @@ include_directories(${OpenCV_INCLUDE_DIRS})
 string(APPEND 
     CMAKE_EXE_LINKER_FLAGS " -lpthread" " -fcoroutines" " -lrt")
 
-add_library(cbtask "")
-add_subdirectory(./task)
-add_library(cbthread "")
-add_subdirectory(./thread)
-add_library(cbsync "")
-add_subdirectory(./sync)
+add_subdirectory(./cbparallel)
 
 add_executable(opencvtest main.cpp)
 
 target_link_libraries(opencvtest 
     ${OpenCV_LIBS} 
-    cbtask 
-    cbthread
-    cbsync)
+    cbparallel)
 
  target_sources(opencvtest
     PRIVATE

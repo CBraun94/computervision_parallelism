@@ -3,7 +3,7 @@
 #include <iostream>
 #include <functional>
 
-#include "../log.hpp"
+#include "../../log.hpp"
 
 CBThreadPool::~CBThreadPool()
 {
@@ -18,7 +18,7 @@ CBThreadPool::~CBThreadPool()
 void CBThreadPool::push_task (CBTask* t, bool wait)
 {
     _sem_task.Enter();
-    _tasks.push_back(t);
+    _tasks.push(t);
     t = NULL;
     resume();
     _sem_task.Leave();
@@ -31,8 +31,10 @@ void CBThreadPool::push_task (CBTask* t, bool wait)
 void CBThreadPool::push_tasks(std::vector<CBTask*> v, bool wait)
 {
     _sem_task.Enter();
-    _tasks.insert(_tasks.end(), v.begin(), v.end());
-    v.clear();
+    
+    for(auto it = v.begin(); it!=v.end(); it++)
+        _tasks.push((*it));
+    
     _sem_task.Leave();
     
     resume();
@@ -75,8 +77,8 @@ CBTask* CBThreadPool::getTask()
 
     CBTask* t = NULL;
     if(!_tasks.empty()){
-        t = std::move(_tasks.front());
-        _tasks.erase(_tasks.begin());
+        t = _tasks.front();
+        _tasks.pop();
     } else  {
         cb::log("CBThreadPool", "empty");
         _event_empty.Signal();

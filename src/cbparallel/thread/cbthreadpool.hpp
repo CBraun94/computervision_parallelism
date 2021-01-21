@@ -8,6 +8,7 @@
 #include "../sync/eventposix.hpp"
 
 #include <vector>
+#include <queue>
 #include <memory>
 
 class CBThreadPool{
@@ -26,7 +27,7 @@ private:
     size_t _capacity;
     
     std::vector<CBPoolWorker*> _worker;
-    std::vector<CBTask*> _tasks;
+    std::queue<CBTask*> _tasks;
     
     SemaphorePosix _sem_task;
     std::shared_ptr<SemaphorePosix> _sem_working;

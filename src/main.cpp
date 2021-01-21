@@ -9,11 +9,10 @@
 
 int main(int argc, char** argv)
 {    
-    //cb::run_example(cb::_ex1, example_one);
-    while(1)
-        cb::run_example(cb::_ex2, example_two);
-    //cb::run_example(cb::_ex3, example_three);
-    //cb::run_example(cb::_ex4, example_four);
+    cb::run_example(cb::_ex1, example_one);
+    cb::run_example(cb::_ex2, example_two);
+    cb::run_example(cb::_ex3, example_three);
+    cb::run_example(cb::_ex4, example_four);
     
     return 0;
 }
