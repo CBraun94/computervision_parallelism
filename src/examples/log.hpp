@@ -6,8 +6,9 @@
 #include <sys/syscall.h> /* linux specific */
 
 #include <string>
-
 #include <chrono> 
+#include <iostream>
+#include <functional>
 
 namespace cb{
 

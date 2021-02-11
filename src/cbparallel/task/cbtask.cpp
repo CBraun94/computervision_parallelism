@@ -1,6 +1,6 @@
 #include "cbtask.hpp"
 
-#include "../../log.hpp"
+#include "../util/cblog.hpp"
 
 CBTask::CBTask ( CBTask && t )
 {

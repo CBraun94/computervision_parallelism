@@ -3,7 +3,7 @@
 #include <iostream>
 #include <functional>
 
-#include "../../log.hpp"
+#include "../util/cblog.hpp"
 
 CBThreadPool::~CBThreadPool()
 {
@@ -22,9 +22,7 @@ void CBThreadPool::push_task (CBTask* t, bool wait)
     t = NULL;
     resume();
     _sem_task.Leave();
-    
-    
-    
+
     this->wait();
 }
 

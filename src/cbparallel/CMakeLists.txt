@@ -6,16 +6,27 @@ set(CMAKE_CXX_STANDARD_REQUIRED ON)
 string(APPEND 
     CMAKE_EXE_LINKER_FLAGS " -lpthread" " -fcoroutines" " -lrt")
 
-add_library(cbtask "")
-add_subdirectory(./task)
-add_library(cbthread "")
-add_subdirectory(./thread)
-add_library(cbsync "")
+add_library(cbctrl SHARED "")
+add_subdirectory(./ctrl)
+add_library(cbsync SHARED "")
 add_subdirectory(./sync)
+add_library(cbtask SHARED "")
+add_subdirectory(./task)
+add_library(cbthread SHARED "")
+add_subdirectory(./thread)
+add_library(cbutil SHARED "")
+add_subdirectory(./util)
 
-add_library(cbparallel SHARED cbtaskmanager.hpp)
+add_library(cbparallel SHARED "")
+
+target_sources(cbparallel
+    PUBLIC
+    "cbmain.hpp")
 
 target_link_libraries(cbparallel
+    cbctrl
+    cbsync
     cbtask 
     cbthread
-    cbsync)
+    cbutil
+    )

@@ -1,9 +1,9 @@
 #ifndef EXAMPLE_TWO_HPP_INCLUDED
 #define EXAMPLE_TWO_HPP_INCLUDED
 
-#include "cbparallel/thread/cbthreadpool.hpp"
-#include "cbparallel/task/cbtaskanonymous.hpp"
-#include "cbparallel/task/cbtaskfor.hpp"
+#include "../cbparallel/thread/cbthreadpool.hpp"
+#include "../cbparallel/task/cbtaskanonymous.hpp"
+#include "../cbparallel/task/cbtaskfor.hpp"
 
 #include "log.hpp"
 

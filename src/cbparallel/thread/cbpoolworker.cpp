@@ -6,7 +6,7 @@
 #include <unistd.h> /* linux specific */
 #include <sys/syscall.h> /* linux specific */
 
-#include "../../log.hpp"
+#include "../util/cblog.hpp"
 
 CBPoolWorker::~CBPoolWorker()
 {

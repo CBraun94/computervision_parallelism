@@ -1,10 +1,10 @@
 #ifndef EXAMPLE_FOUR_HPP_INCLUDED
 #define EXAMPLE_FOUR_HPP_INCLUDED
 
-#include "cbparallel/thread/cbthreadpool.hpp"
-#include "cbparallel/task/cbtaskanonymous.hpp"
-#include "cbparallel/task/cbtaskfor.hpp"
-#include "cbparallel/sync/semaphoreposix.hpp"
+#include "../cbparallel/thread/cbthreadpool.hpp"
+#include "../cbparallel/task/cbtaskanonymous.hpp"
+#include "../cbparallel/task/cbtaskfor.hpp"
+#include "../cbparallel/sync/semaphoreposix.hpp"
 
 #include "log.hpp"
 

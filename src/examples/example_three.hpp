@@ -1,10 +1,10 @@
 #ifndef EXAMPLE_THREE_HPP_INCLUDED
 #define EXAMPLE_THREE_HPP_INCLUDED
 
-#include "cbparallel/thread/cbthreadpool.hpp"
-#include "cbparallel/task/cbtaskanonymous.hpp"
-#include "cbparallel/task/cbtaskfor.hpp"
-#include "cbparallel/sync/semaphoreposix.hpp"
+#include "../cbparallel/thread/cbthreadpool.hpp"
+#include "../cbparallel/task/cbtaskanonymous.hpp"
+#include "../cbparallel/task/cbtaskfor.hpp"
+#include "../cbparallel/sync/semaphoreposix.hpp"
 
 #include <opencv4/opencv2/opencv.hpp>
 

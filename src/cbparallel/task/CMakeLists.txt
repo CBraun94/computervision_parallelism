@@ -1,6 +1,6 @@
 cmake_minimum_required(VERSION 3.15)
 
-set(CMAKE_CXX_STANDARD 17)
+set(CMAKE_CXX_STANDARD 20)
 
 target_sources(cbtask
     PUBLIC
@@ -11,4 +11,4 @@ target_sources(cbtask
     "cbtaskfor.hpp"
     "cbtaskfor.cpp")
 
-    target_include_directories (cbtask PUBLIC ${CMAKE_CURRENT_SOURCE_DIR})
+target_include_directories (cbtask PUBLIC ${CMAKE_CURRENT_SOURCE_DIR})
