@@ -30,3 +30,15 @@ target_link_libraries(cbparallel
     cbthread
     cbutil
     )
+
+set_target_properties(cbparallel PROPERTIES PUBLIC_HEADER ./include/libcbparallel.hpp)
+
+target_include_directories(cbparallel PRIVATE ctrl)
+target_include_directories(cbparallel PRIVATE include)
+target_include_directories(cbparallel PRIVATE sync)
+target_include_directories(cbparallel PRIVATE task)
+target_include_directories(cbparallel PRIVATE thread)
+target_include_directories(cbparallel PRIVATE util)
+
+#install(TARGETS cbparallel DESTINATION ${CMAKE_INSTALL_LIBDIR})
+#install(FILES libcbparallel.hpp DESTINATION ${CMAKE_INSTALL_INCLUDEDIR})    

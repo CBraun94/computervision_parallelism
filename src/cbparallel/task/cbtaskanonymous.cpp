@@ -1,6 +1,6 @@
 #include "cbtaskanonymous.hpp"
 
-#include <iostream>
+#include "../util/cblog.hpp"
 
 CBTaskAnonymous::CBTaskAnonymous ( const CBTaskAnonymous& t )
 {
@@ -20,7 +20,10 @@ CBTaskAnonymous & CBTaskAnonymous::operator= ( const CBTaskAnonymous& t )
 
 void CBTaskAnonymous::Execute() const
 {
-    std::cout << "CBTaskAnonymous Execute" << std::endl << std::flush;
+    std::string s;
+    s = "Execute";
+    cb::log("CBTaskAnonymous", s);
+    
     if(task != NULL)
         task();
 }

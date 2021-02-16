@@ -1,16 +1,9 @@
 #ifndef LOG_HPP_INCLUDED
 #define LOG_HPP_INCLUDED
 
-#include <sys/types.h> /* linux specific */
-#include <unistd.h> /* linux specific */
-#include <sys/syscall.h> /* linux specific */
+#include "../cbparallel/util/cblog.hpp"
 
-#include <string>
-#include <chrono> 
-#include <iostream>
-#include <functional>
-
-namespace cb{
+namespace cb {
 
 constexpr auto _delimiter = ".";
 constexpr auto _ex1 = "one";
@@ -23,32 +16,17 @@ constexpr auto _ex7 = "seven";
 constexpr auto _ex8 = "eight";
 constexpr auto _ex9 = "nine";
 
-using LogFunc = std::function<void(void)>;
-
-inline void log(std::string caller, std::string msg)
-{
-    std::cout << "tid" << gettid()<< " - "<< caller <<" - " << msg << std::endl << std::flush;
 }
 
-inline void timetaken(std::string name, LogFunc f)
+inline void run_example(std::string ex, cb::LogFunc f)
 {
-    auto start = std::chrono::high_resolution_clock::now(); 
-    f();
-    auto stop = std::chrono::high_resolution_clock::now(); 
+    std::string sa, sb;
     
-    auto durationms = duration_cast<std::chrono::milliseconds>(stop - start); 
-    auto durationsec = duration_cast<std::chrono::seconds>(stop - start);
-  
-    std::cout << "Time taken by " << name << ": " << durationsec.count() << " seconds or " << durationms.count() << " milliseconds" << std::endl << std::flush;
-}
-
-inline void run_example(std::string ex, LogFunc f)
-{
-    std::cout<<"start of example: " << ex << std::endl << std::flush;
+    sa = "start of example: " + ex;
+    cb::log("run_example", sa);
     f();
-    std::cout<<"end of example: " << ex << std::endl << std::flush;
-}
-
+    sb = "end of example: " + ex;
+    cb::log("run_example", sb);
 }
 
 #endif // LOG_HPP_INCLUDED

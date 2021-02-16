@@ -1,6 +1,5 @@
 #include "cbthreadpool.hpp"
 
-#include <iostream>
 #include <functional>
 
 #include "../util/cblog.hpp"
@@ -50,14 +49,17 @@ void CBThreadPool::wait()
 
 void CBThreadPool::employ()
 {
-    cb::log("CBThreadPool", "about to employ ");
-    _sem_task.Enter();
-    auto f = std::bind(&CBThreadPool::getTask, this);
-    for(auto i = 0; i < _capacity; i++){
-        _worker.push_back(new CBPoolWorker(_sem_working, f));
-        (*_worker.back()).start();
+    if(is_capacity()){
+        /* nothing to do */
+        cb::log("CBThreadPool", "at capacity ");
+    } else{
+        cb::log("CBThreadPool", "about to employ ");
+        auto f = std::bind(&CBThreadPool::getTask, this);
+        for(auto i = 0; i < _capacity; i++){
+            _worker.push_back(new CBPoolWorker(_sem_working, f));
+            (*_worker.back()).start();
+        }
     }
-    _sem_task.Leave();
 }
 
 void CBThreadPool::resume()
@@ -67,6 +69,10 @@ void CBThreadPool::resume()
         (*(*it)).resume();
     }
     //_sem_task.Leave();
+}
+
+bool CBThreadPool::is_capacity(){
+    return _capacity == _worker.size();
 }
 
 CBTask* CBThreadPool::getTask()

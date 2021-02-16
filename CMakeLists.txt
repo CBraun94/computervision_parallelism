@@ -22,10 +22,18 @@ endif()
 #
  
 project(
-    opencvtest
+    libcbparallel
     VERSION 0.1
     LANGUAGES CXX)
  
 add_subdirectory(src)
 
-# install(TARGETS opencvtest DESTINATION bin)
+set_target_properties(libcbparallel PROPERTIES PUBLIC_HEADER include/libcbparallel.hpp)
+
+target_include_directories(libcbparallel PRIVATE include)
+target_include_directories(libcbparallel PRIVATE src)
+
+include(GNUInstallDirs)
+install(TARGETS libcbparallel
+    LIBRARY DESTINATION ${CMAKE_INSTALL_LIBDIR}
+    PUBLIC_HEADER DESTINATION ${CMAKE_INSTALL_INCLUDEDIR})

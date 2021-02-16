@@ -37,6 +37,8 @@ private:
     void employ();
     void resume();
     
+    bool is_capacity();
+    
     CBTask *getTask();
 };
 

@@ -1,7 +1,5 @@
 #include "cbpoolworker.hpp"
 
-#include <iostream>
-
 #include <sys/types.h> /* linux specific */
 #include <unistd.h> /* linux specific */
 #include <sys/syscall.h> /* linux specific */

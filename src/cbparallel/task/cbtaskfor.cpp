@@ -1,6 +1,6 @@
 #include "cbtaskfor.hpp"
 
-#include <iostream>
+#include "../util/cblog.hpp"
 
 CBTaskFor::CBTaskFor ( const CBTaskFor& t )
 {
@@ -56,7 +56,16 @@ std::vector<CBTask*> CBTaskFor::slice(TaskFor task,
 
 void CBTaskFor::Execute() const
 {
-    std::cout << "CBTaskFor Execute with: begin-"<< _begin << " end-" << _end << "increment-" << _increment << std::endl << std::flush;
+    std::string s;
+    
+    s = "Execute with: begin-" + 
+        std::to_string(_begin) + 
+        " end-" + std::to_string(_end) + 
+        "increment-" + 
+        std::to_string(_increment);
+        
+    cb::log("CBTaskFor", s);
+    
     if(_task != NULL)
         for(auto i = _begin; i < _end; i+=_increment) 
             _task(i);

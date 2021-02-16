@@ -2,7 +2,6 @@
 
 #include <functional> /* std::bind */
 #include <algorithm>
-#include <iostream>
 
 #include "../util/cblog.hpp"
 
